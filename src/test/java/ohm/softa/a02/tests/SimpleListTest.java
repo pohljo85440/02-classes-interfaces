@@ -42,7 +42,7 @@ public class SimpleListTest {
 	}
 
 	@Test
-	void testFilterAnonymousClass(){
+	void testFilterAnonymousClassA(){
 		SimpleListImpl result = (SimpleListImpl) testList.filter(new SimpleFilter() {
 			@Override
 			public boolean include(Object item) {
@@ -58,11 +58,32 @@ public class SimpleListTest {
 	}
 
 	@Test
-	void testFilterLambda(){
+	void testFilterLambdaA(){
 		SimpleListImpl result = (SimpleListImpl) testList.filter(o -> ((int)o) % 2 == 0);
 		for(Object o : result){
 			int i = (int)o;
 			assertTrue(i % 2 == 0);
 		}
+	}
+	@Test
+	void testFilterLambdaB(){
+		SimpleListImpl result = (SimpleListImpl) testList.filter(o -> ((int)o)  > 4);
+		for(Object o : result){
+			int i = (int)o;
+			assertTrue(i > 4);
+		}
+	}
+
+	@Test
+	void testFilterAnonymousClassB(){
+		SimpleListImpl result = (SimpleListImpl) testList.filter(new SimpleFilter() {
+			int counter = 0;
+			@Override
+			public boolean include(Object item) {
+				counter++;
+				return counter % 3 == 0;
+			}
+		});
+		assertTrue(result.size() == 1);
 	}
 }
